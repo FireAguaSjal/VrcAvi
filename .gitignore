@@ -1,0 +1,9 @@
+node_modules/
+websockettester/auth.json
+websockettester/node_modules/
+websockettester/*.pem
+websockettester/lastMessage.txt
+.system_generated/
+.gemini/
+.DS_Store
+*.log

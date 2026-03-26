@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>VRC Avi Switcher - Secure Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #eee;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: #151515;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+            margin-bottom: 30px;
+        }
+
+        h1,
+        h2 {
+            color: #00ff9d;
+        }
+
+        .step {
+            background: #1c1c1c;
+            border-left: 4px solid #00ff9d;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            background: #000;
+            border: 1px solid #333;
+            color: #00ff9d;
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        button {
+            background: #00ff9d;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00cc7a;
+        }
+
+        .output {
+            background: #000;
+            padding: 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            color: #00ff9d;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Command Generator (StreamElements)container">
+
+        <div class="card">
+            <h1>VRChat Sync Portal</h1>
+            <p>This system enables secure, real-time avatar synchronization through a browser extension and custom API
+                integration. NOT AFFILIATED WITH TWITCH, GITHUB, CHROME, VRCHAT OR STREAM ELEMENTS</p>
+        </div>
+
+        <div class="card">
+            <h2>Setup Guide</h2>
+
+            <div class="step">1. Download the browser extension: <strong>extension.mock</strong></div>
+            <div class="step">2. Download the program via GitHub (<strong>github.mock</strong>) or access the hosted
+                version (<strong>apiurl.mock</strong>)</div>
+            <div class="step">3. Open any <strong>VRChat avatar page</strong> while logged in using Chrome on desktop
+            </div>
+            <div class="step">4. Open the extension and set a 4-digit PIN</div>
+            <div class="step">5. Close the extension, wait ~10 seconds, then reopen it</div>
+            <div class="step">6. Copy the generated session token</div>
+            <div class="step">7. Set up StreamElements by following a tutorial on YouTube</div>
+            <div class="step">8. Create a chatbot command using the generator below</div>
+            <div class="step">9. If the avatar page is closed for ~40 seconds, the token must be refreshed</div>
+            <div class="step">10. For support, contact: <strong>example@example.com</strong></div>
+        </div>
+
+        <div class="card">
+            <h2>Command Generator (StreamElements)</h2>
+
+            <label>User ID or Profile URL</label>
+            <input id="userInput" placeholder="usr_xxx OR full VRChat profile URL">
+
+            <label>4-Digit PIN</label>
+            <input id="pinInput" placeholder="1234">
+
+            <label>Port Forwarded Domain</label>
+            <input id="domainInput" placeholder="https://yourdomain.com">
+
+            <label>Session Token</label>
+            <input id="tokenInput" placeholder="paste token here">
+
+            <button onclick="generateCommand()">Generate</button>
+
+            <div class="output" id="commandOutput"></div>
+            <button onclick="copyText('commandOutput')">Copy</button>
+        </div>
+
+        <div class="card">
+            <h2>Avatar Command Builder</h2>
+
+            <label>Avatar URL or ID</label>
+            <input id="avatarInput" placeholder="Paste avatar URL or avtr_xxx">
+
+            <button onclick="formatAvatar()">Generate</button>
+
+            <div class="output" id="avatarOutput"></div>
+            <button onclick="copyText('avatarOutput')">Copy</button>
+        </div>
+
+        <div class="footer">
+            Server Version: v4.0.0 | Secure Mode Enabled
+        </div>
+
+    </div>
+
+    <script>
+        function extractUserId(input) {
+            if (input.includes("usr_")) {
+                let match = input.match(/usr_[a-zA-Z0-9-]+/);
+                return match ? match[0] : input;
+            }
+            return input.trim();
+        }
+
+        function generateCommand() {
+            let user = extractUserId(document.getElementById("userInput").value);
+            let pin = document.getElementById("pinInput").value.trim();
+            let domain = document.getElementById("domainInput").value.trim();
+            let token = document.getElementById("tokenInput").value.trim();
+
+            let output = '${customapi ' + domain +
+                '/change/' + user +
+                '/avtr_$(1.word)_$(2.word)_$(3.word)_$(4.word)_$(5.word)/' +
+                pin + '/' + token + '}';
+
+            document.getElementById("commandOutput").innerText = output;
+        }
+
+        function formatAvatar() {
+            let input = document.getElementById("avatarInput").value.trim();
+
+            let match = input.match(/avtr_[a-zA-Z0-9-]+/);
+            let id = match ? match[0] : input;
+
+            id = id.replace("avtr_", "").replace(/-/g, " ");
+
+            document.getElementById("avatarOutput").innerText = id;
+        }
+
+        function copyText(id) {
+            let text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+        }
+    </script>
+
+</body>
+
+</html>

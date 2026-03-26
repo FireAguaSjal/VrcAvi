@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "VRChat Auto Avatar Changer",
+  "version": "1.2",
+  "description": "Auto avatar changer with persistent WebSocket and popup control",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://vrchat.com/home/avatar/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost/*",
+    "https://vrchat.com/*"
+  ]
+}

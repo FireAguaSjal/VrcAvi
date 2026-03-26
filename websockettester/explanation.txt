@@ -1,0 +1,27 @@
+Why is my User ID different? (explanation.txt)
+==============================================
+
+The extension currently looks for a User ID on the VRChat page to know "who" 
+is using the extension. 
+
+The Problem:
+------------
+On an avatar page (like /home/avatar/avtr_...), the extension sees a link 
+that says "By: [Creator Name]". This link contains a User ID (usr_...).
+- If you are on YOUR OWN avatar page, it finds YOUR User ID (usr_xxx...).
+- If you are on SOMEONE ELSE'S avatar page, it finds THE CREATER'S ID (usr_yyy...).
+
+Because the extension thinks it is representing the creator (usr_yyy...), it 
+registers that ID in the server. But when you try to send a command to 
+YOUR ID (usr_xxx...), the server doesn't see a connection for usr_xxx... yet.
+
+The Fix:
+--------
+I am updating the extension to be smarter! It will now:
+1. Try to find your "Logged In" User ID from the VRChat navigation bar 
+   or your profile link, rather than just the creator of the avatar.
+2. Save your "Owner ID" the first time it sees it, so it always knows 
+   who YOU are, even when you are looking at other people's stuff.
+
+This ensures the server's auth.json always matches YOUR actual User ID 
+(f55...) and not the random creator of whatever avatar you are viewing.

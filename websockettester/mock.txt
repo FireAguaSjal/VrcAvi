@@ -1,0 +1,50 @@
+VRChat Sync: API Endpoint Mockups (mock.txt)
+==============================================
+
+1. THE POLLING ENDPOINT (Check for commands)
+-----------------------------------------------
+ENDPOINT:
+GET http://localhost:297/poll/usr_ID_HERE?pin=1111&token=abcde12345&username=Name
+
+MOCK RESPONSE:
+{
+  "avatarId": "avtr_ID_HERE",
+  "status": "ok"
+}
+
+2. THE CHANGE ENDPOINT (Trigger an avatar swap)
+-----------------------------------------------
+ENDPOINT:
+GET http://localhost:297/change/usr_ID_HERE/avtr_ID_HERE/1111/abcde12345
+
+MOCK RESPONSE:
+OK (Status 200)
+
+3. FAVICON PORTAL (Automatic redirection)
+------------------------------------------
+ENDPOINT:
+GET http://localhost:297/favicon.ico
+
+MOCK RESPONSE:
+HTTP/1.1 302 Found
+Location: /intro.html
+
+4. FIRST-TIME REGISTRATION (PIN Setup)
+--------------------------------------
+ENDPOINT:
+GET http://localhost:297/poll/usr_newuser?pin=1234
+
+MOCK RESPONSE:
+{
+  "token": "da5e505eeb60c3f2a7e95eaee2281f2e",
+  "status": "ok"
+}
+
+5. INVALID PIN (Automated block)
+--------------------------------
+ENDPOINT:
+GET http://localhost:297/poll/usr_victim?pin=9999
+
+MOCK RESPONSE:
+HTTP/1.1 401 Unauthorized
+Invalid PIN (Requesting IP is now blocked for 5 minutes)
